@@ -1,0 +1,16 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { loadComicChapters } from "../../../main";
+
+const { name } = Astro.params
+
+const chapters = loadComicChapters(name! as string)
+---
+
+<Layout title="{{{{COMIC NAME">
+    {name}
+    <br>
+    <ul>
+        {chapters.map(c => <li><a href={`./${name}/${c}`}>{c}</a></li>)}
+    </ul>
+</Layout>

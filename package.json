@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^2.1.2",
+    "@types/node": "^18.11.9",
     "astro": "^1.6.9",
-    "tailwindcss": "^3.2.4"
+    "fs": "^0.0.1-security",
+    "tailwindcss": "^3.2.4",
+    "yaml": "^2.1.3"
   }
 }

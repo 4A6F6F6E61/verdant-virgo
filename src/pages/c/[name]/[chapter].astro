@@ -1,0 +1,17 @@
+---
+import fs from "fs";
+import Layout from "../../../layouts/Layout.astro";
+
+const { name, chapter } = Astro.params
+
+const images = fs.readdirSync(`./public/comics/${name}/${chapter}`)
+---
+
+<Layout title={`${name} - ${chapter}`}>
+    <div class="m-2">
+        {name}
+        <br>
+        {chapter}
+        {images.map(i => <div><img src={`/comics/${name}/${chapter}/${i}`}/><br></div>)}
+    </div>
+</Layout>

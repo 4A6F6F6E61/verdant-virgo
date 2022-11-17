@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import {loadComics} from "../../main"
+import ComicCard from "../../components/ComicCard.astro"
+
+const comics = loadComics()
+
+const test = comics[0]
+---
+<Layout title="Welcome to Astro.">
+    <div class="flex flex-wrap">
+        {comics.map(comic => <ComicCard name={comic.name} img={`./comics/${comic.name}/cover.webp`} tags={comic.genre}/>)}
+    </div>
+</Layout>

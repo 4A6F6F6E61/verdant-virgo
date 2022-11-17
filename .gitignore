@@ -18,3 +18,8 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+#Userfiles
+public/Pictures/*
+public/Comics/*
+public/Videos/*
