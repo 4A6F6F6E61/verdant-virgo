@@ -7,8 +7,10 @@ const comics = loadComics()
 
 const test = comics[0]
 ---
-<Layout title="Welcome to Astro.">
-    <div class="flex flex-wrap">
-        {comics.map(comic => <ComicCard name={comic.name} img={`./comics/${comic.name}/cover.webp`} tags={comic.genre}/>)}
+<Layout title="Comics">
+    <div class="flow-root">
+        <div class="flex flex-wrap items-center justify-center ">
+            {comics.map(comic => <ComicCard name={comic.name} img={`./comics/${comic.name}/cover.webp`} tags={comic.genre}/>)}
+        </div>
     </div>
 </Layout>

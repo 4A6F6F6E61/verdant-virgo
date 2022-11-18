@@ -7,7 +7,7 @@ const { name } = Astro.params
 const chapters = loadComicChapters(name! as string)
 ---
 
-<Layout title="{{{{COMIC NAME">
+<Layout title={name! as string}>
     {name}
     <br>
     <ul>
