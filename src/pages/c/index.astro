@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import {loadComics} from "../../main"
+import ComicCard from "../../components/ComicCard.astro"
+
+const comics = loadComics()
+
+const test = comics[0]
+---
+<Layout title="Comics">
+    <div class="flow-root">
+        <div class="flex flex-wrap items-center justify-center ">
+            {comics.map(comic => <ComicCard name={comic.name} img={`./comics/${comic.name}/cover.webp`} tags={comic.genre}/>)}
+        </div>
+    </div>
+</Layout>

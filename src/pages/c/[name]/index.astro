@@ -1,0 +1,48 @@
+---
+import Layout from "../../../layouts/Layout.astro"
+import { loadComicChapters, loadComicData } from "../../../main"
+import ComicInfo from "../../../components/ComicInfo.astro"
+import * as db from "../../../db"
+
+const { name } = Astro.params
+
+const chapters = loadComicChapters(name! as string)
+const comic = loadComicData(name! as string)
+
+const pool = db.login("ejYrkGnzPqZM")
+db.createTables(pool)
+---
+
+<Layout title={name! as string}>
+    <div class="p-2">
+        {name}
+        <ComicInfo {...comic} />
+        {
+            /*<div class="flex">
+			<img src={`../comics/${name}/cover.webp`} alt="" />
+			<div class="">
+				Artist: {comic.artist}
+				<br />
+				Tags:
+				{
+					comic.genre.map(tag => (
+						<span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+							{tag}
+						</span>
+					))
+				}
+			</div>
+		</div>*/
+        }
+        <br />
+        <ul>
+            {
+                chapters.map(c => (
+                    <li>
+                        <a href={`./${name}/${c}`}>{c}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</Layout>

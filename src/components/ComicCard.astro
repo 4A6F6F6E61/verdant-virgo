@@ -1,0 +1,28 @@
+---
+export interface Props {
+	name: string
+	tags: Array<string>
+	img: string
+}
+
+const { name, tags, img } = Astro.props
+---
+
+<a
+	class="xl:max-w-[19rem] md:max-w-[22rem] rounded overflow-hidden shadow-lg z-10 bg-gray-900 m-2"
+	href={`/c/${name}`}
+>
+	<img class="w-full" src={img} alt="Sunset in the mountains" />
+	<div class="px-6 py-2">
+		<div class="font-bold text-xl mb-2">{name}</div>
+	</div>
+	<div class="px-3 pb-2 h-10">
+		{
+			tags.map(tag => (
+				<span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-10">
+					{tag}
+				</span>
+			))
+		}
+	</div>
+</a>
