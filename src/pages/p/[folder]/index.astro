@@ -1,0 +1,49 @@
+---
+import ImageCard from "../../../components/ImageCard.astro";
+import Layout from "../../../layouts/Layout.astro"
+import { getPictures } from "../../../main"
+
+const { folder } = Astro.params
+
+const images = getPictures("./public/Pictures", folder! as string)
+
+const picture = Astro.url.searchParams.get('p')! || '';
+
+const test = 100;
+---
+
+<Layout title={folder! as string}>
+	<div id="gallery-root" class="flex flex-wrap" data-image={picture}>
+		{images.map((image) => <ImageCard url={`/Pictures/${folder}/${image}`}/>)}
+		
+		<image-preview class="w-full h-full z-50 fixed left-0 top-0 flex justify-center">
+			<div id="background" class="w-full h-full bg-black opacity-60 left-0 top-0 z-10 absolute"></div>
+			<img src={`/Pictures/${folder}/${picture}`} alt="big-image" class="z-40 absolute max-h-[90%] max-w-[90%] min-h-[80%]">
+		</image-preview>
+		
+	</div>
+</Layout>
+
+<script lang="typescript">
+console.log({test})
+const { image } = document.getElementById('gallery-root')?.dataset
+class ImagePreview extends HTMLElement {
+	constructor() {
+		super();
+		console.log("img: ", image)
+		if (image == "")
+			this.style.display = 'none';
+		const bg = this.querySelector('#background');
+		bg.addEventListener('click', () => {
+			this.style.display = 'none';
+		});
+    }
+}
+
+customElements.define('image-preview', ImagePreview);
+
+// document.getElementById('background')?.addEventListener('click', () => {
+// 	window.location.href = `/p/${folder}`
+// })
+
+</script>

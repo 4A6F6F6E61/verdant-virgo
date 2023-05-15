@@ -1,6 +1,12 @@
 ---
+import ImageCatCard from "../../components/ImageCatCard.astro";
 import Layout from "../../layouts/Layout.astro"
+import { getPicCategories } from "../../main";
+
+const c = getPicCategories();
 ---
-<Layout title="Welcome to Astro.">
-    Pictures
+<Layout title="Pictures">
+    <div class="flex">
+        {c.map((cat) => <ImageCatCard {...cat}/>)}
+    </div>
 </Layout>

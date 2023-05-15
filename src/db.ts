@@ -22,7 +22,7 @@ export async function createTables(pool: Pool): Promise<void> {
     );`
     )
         .then(console.log)
-        .catch(console.log)
+        .catch(console.error)
 }
 
 export async function seedDatabase(pool: Pool): Promise<void> {
@@ -31,5 +31,5 @@ export async function seedDatabase(pool: Pool): Promise<void> {
 
 const seedComics = async (pool: Pool): Promise<void> => {}
 
-const pool = login("ejYrkGnzPqZM")
+const pool = login("password")
 createTables(pool)

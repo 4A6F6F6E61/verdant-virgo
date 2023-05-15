@@ -3,7 +3,7 @@ import YAML from "yaml"
 
 export interface PicCat {
     cat: string
-    pics: Array<string>
+    preview: string
 }
 
 // yield return; function return ; .next() input
@@ -13,16 +13,16 @@ export function getPicCategories(): Array<PicCat> {
     for (let cat of cats)
         ret.push({
             cat: cat,
-            pics: getPictures("./public/Pictures", cat),
+            preview: getPictures("./public/Pictures", cat)[0],
         } as PicCat)
     return ret
 }
 
-function getPictures(
+export function getPictures(
     path: PathLike,
     category: string
 ): Array<string | undefined> {
-    let ret = fs.readdirSync(`${path}/${category}`).map(pic => {
+    return fs.readdirSync(`${path}/${category}`).map(pic => {
         if (
             pic.endsWith(".jpg") ||
             pic.endsWith(".webp") ||
@@ -30,7 +30,6 @@ function getPictures(
         )
             return pic
     })
-    return ret
 }
 
 export interface Comic {
