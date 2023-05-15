@@ -8,42 +8,60 @@ const { folder } = Astro.params
 const images = getPictures("./public/Pictures", folder! as string)
 
 const picture = Astro.url.searchParams.get('p')! || '';
-
-const test = 100;
 ---
 
 <Layout title={folder! as string}>
-	<div id="gallery-root" class="flex flex-wrap" data-image={picture}>
+	<div id="gallery-root" class="flex flex-wrap">
 		{images.map((image) => <ImageCard url={`/Pictures/${folder}/${image}`}/>)}
 		
-		<image-preview class="w-full h-full z-50 fixed left-0 top-0 flex justify-center">
+		<image-preview class="w-full h-full z-50 fixed left-0 top-0 flex justify-center" style="display: none;">
 			<div id="background" class="w-full h-full bg-black opacity-60 left-0 top-0 z-10 absolute"></div>
 			<img src={`/Pictures/${folder}/${picture}`} alt="big-image" class="z-40 absolute max-h-[90%] max-w-[90%] min-h-[80%]">
 		</image-preview>
 		
 	</div>
 </Layout>
+ 
+<script data-image={picture} data-folder={folder} id="script" type="module" is:inline>
 
-<script lang="typescript">
-console.log({test})
-const { image } = document.getElementById('gallery-root')?.dataset
+// window.addEventListener('keydown', (e) => {
+// 	if (e.key == 'Escape') {
+// 		document.querySelector('image-preview')?.style.display = 'none';
+// 	}
+// })
+// window.addEventListener('popstate', () => {
+// 	document.querySelector('image-preview')?.style.display = 'none';
+// })
+
+const { image, folder } = document.querySelector("#script")?.dataset
 class ImagePreview extends HTMLElement {
 	constructor() {
 		super();
 		console.log("img: ", image)
-		if (image == "")
-			this.style.display = 'none';
+		if (image)
+			this.style.display = 'flex';
 		const bg = this.querySelector('#background');
 		bg.addEventListener('click', () => {
 			this.style.display = 'none';
+			window.history.pushState({}, document.title, `/p/${folder}`);
 		});
-    }
+	}
 }
+customElements.define('image-preview', ImagePreview)
+</script>
 
-customElements.define('image-preview', ImagePreview);
+<script defer>
 
-// document.getElementById('background')?.addEventListener('click', () => {
-// 	window.location.href = `/p/${folder}`
-// })
+const { image, folder } = document.querySelector("#script")?.dataset
+const imagePreview = document.querySelector('image-preview')
+function clickImage(img) {
+	console.log('click')
+	const url = new URL(window.location.href)
+	url.searchParams.set('p', `${img}`)
+	window.history.pushState({}, '', url)
+	window.dispatchEvent(new Event('popstate'))
+	imagePreview.style.display = 'flex';
+	imagePreview.querySelector('img').src = `/Pictures/${folder}/${img}`
+}
 
 </script>
