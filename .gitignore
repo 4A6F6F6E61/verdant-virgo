@@ -23,3 +23,8 @@ pnpm-debug.log*
 public/Pictures/*
 public/Comics/*
 public/Videos/*
+
+# Editors
+.vscode/
+.fleet/
+.idea/
